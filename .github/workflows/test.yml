@@ -1,0 +1,24 @@
+name: test-actions
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Print something
+      run: |
+        echo "Test" > test.txt
+    - name: Create PR
+      uses: peter-evans/create-pull-request@v4
+      with:
+        add-paths: |
+          test.txt
+        body: |
+          Test PR
+        branch: AutoPR/test
+        assignees: ${{ github.actor }}
